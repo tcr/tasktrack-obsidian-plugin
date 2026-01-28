@@ -1,11 +1,15 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
-	"version": "1.0.0",
-	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
-	"isDesktopOnly": false
+  "id": "tasktrack",
+  "name": "TaskTrack (alpha)",
+  "version": "0.1.0",
+  "minAppVersion": "1.10.0",
+  "description": "Get your life on the fast track. An obsidian task management tool that supports both dedicated modal and (soon) Bases usage. Merges inline task lists with (soon) Bases-compatible task documents so your tasks grow with you.",
+  "author": "Tim Ryan",
+  "authorUrl": "https://github.com/tcr/tasktrack",
+  "isDesktopOnly": false,
+  "features": [
+    "Task creation and management",
+    "Task dependencies and subtasks",
+    "Task scraping from Obsidian notes"
+  ]
 }

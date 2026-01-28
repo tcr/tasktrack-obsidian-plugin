@@ -1,0 +1,42 @@
+# TaskTrack
+
+This is an Obsidian plug-in for managing tasks.
+
+## Technical Stack
+- TypeScript is used instead of JavaScript
+- Preact is used for JSX rendering
+- Vite is our build system
+- Vitest is used for unit testing
+- Tailwind is preferred for CSS styling
+
+## Folder Structure
+
+```
+tasktrack/
+├── src/
+│   ├── components/    # UI components (Preact)
+│   ├── lib/           # Core library code
+│   ├── vendor/        # Third-party code or vendor dependencies
+│   ├── worker/        # Web worker implementations
+|   |-- **/__tests__/  # Unit tests
+
+## Git Commit Messages
+Use conventional commits format:
+- `feat(scope): add new feature`
+- `fix(scope): resolve bug`
+- `docs(scope): update documentation`
+- `style(scope): formatting changes`
+- `refactor(scope): code restructuring`
+- `test(scope): add tests`
+- `chore(scope): maintenance tasks`
+
+Where `scope` is the component or area affected (e.g., search, UI, parser).
+
+## Contributing
+
+- Keep PRs focused on a single change or related changes
+- For new features, please open a GitHub discussion before or alongside your PR
+
+Before submitting changes:
+- Ensure there are no lint errors: `npm run lint`
+- Ensure all tests pass: `npm run test`

@@ -1,0 +1,117 @@
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme);
+/* @import "tailwindcss/preflight.css" layer(base); keep base styles*/
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@import "@toolwind/anchors";
+
+/**
+ * Select anchors
+ */
+
+@layer components {
+    @supports (anchor-position: top) {
+        .anchor-relative {
+            position: relative;
+            anchor-name: --dropdown-anchor;
+        }
+
+        .dropdown-portal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+    }
+}
+
+/**
+ * Task list shimmer
+ */
+
+.task-list-loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.task-list-loading::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        var(--background-modifier-border) 0px,
+        var(--background-modifier-border) 1px,
+        transparent 1px,
+        transparent 32px
+    );
+}
+
+.task-list-loading::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: task-list-shimmer 4s infinite;
+}
+
+@keyframes task-list-shimmer {
+    0% {
+        background-position: 100% 0;
+    }
+    100% {
+        background-position: -100% 0;
+    }
+}
+
+/**
+ * Active task
+ */
+
+.task-list-row-active {
+    background-blend-mode: hue;
+    background:
+        linear-gradient(
+            90deg,
+            hsla(var(--color-accent-hsl), 0.1) 0,
+            hsla(var(--color-accent-hsl), 0.03) 6px
+        ),
+        linear-gradient(
+            0deg,
+            hsla(var(--color-accent-hsl), 0.1) 0,
+            hsla(var(--color-accent-hsl), 0.03) 6px
+        ),
+        linear-gradient(
+            180deg,
+            hsla(var(--color-accent-hsl), 0.1) 0,
+            hsla(var(--color-accent-hsl), 0.03) 6px
+        ),
+        linear-gradient(
+            -90deg,
+            hsla(var(--color-accent-hsl), 0.1) 0,
+            hsla(var(--color-accent-hsl), 0.03) 6px
+        );
+}
+
+.task-list-linenumber {
+    display: none;
+}
+
+.task-list-row:hover .task-list-linenumber {
+    display: inline;
+}

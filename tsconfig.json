@@ -1,30 +1,31 @@
 {
-	"compilerOptions": {
-		"baseUrl": "src",
-		"inlineSourceMap": true,
-		"inlineSources": true,
-		"module": "ESNext",
-		"target": "ES6",
-		"allowJs": true,
-		"noImplicitAny": true,
-		"noImplicitThis": true,
-		"noImplicitReturns": true,
-		"moduleResolution": "node",
-		"importHelpers": true,
-		"noUncheckedIndexedAccess": true,
-		"isolatedModules": true,
-		"strictNullChecks": true,
-		"strictBindCallApply": true,
-		"allowSyntheticDefaultImports": true,
-		"useUnknownInCatchVariables": true,
-		"lib": [
-			"DOM",
-			"ES5",
-			"ES6",
-			"ES7"
-		]
-	},
-	"include": [
-		"src/**/*.ts"
-	]
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "react": ["./node_modules/preact/compat/"],
+      "react/jsx-runtime": ["./node_modules/preact/jsx-runtime"],
+      "react-dom": ["./node_modules/preact/compat/"],
+      "react-dom/*": ["./node_modules/preact/compat/*"],
+    },
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noErrorTruncation": true,
+    "noImplicitReturns": true,
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "module": "ESNext",
+    "target": "ES2022",
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "strictNullChecks": true,
+    "isolatedModules": true,
+    "lib": ["DOM", "ES5", "ES6", "ES7", "WebWorker"],
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
+    "types": ["obsidian-typings", "vite/client"],
+  },
 }

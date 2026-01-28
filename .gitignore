@@ -1,22 +1,26 @@
-# vscode
-.vscode 
+# Node.js
+node_modules/
+npm-debug.log*
 
-# Intellij
-*.iml
+# IDE
 .idea
+.vscode
+*.swp
+*.swo
 
-# npm
-node_modules
-
-# Don't include the compiled main.js file in the repo.
-# They should be uploaded to GitHub releases instead.
-main.js
-
-# Exclude sourcemaps
+# Build
 *.map
+dist/
 
-# obsidian
-data.json
-
-# Exclude macOS Finder (System Explorer) View States
+# Editor
 .DS_Store
+
+# Local settings
+*.env
+.env.local
+.env*.local
+
+# Benchmarks
+benchmarks
+test
+assets
