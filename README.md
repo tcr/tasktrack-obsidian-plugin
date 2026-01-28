@@ -4,7 +4,7 @@
 
 ![Preview image of TaskTrack's modal.](./preview.png)
 
-This is a task:
+Example of inline tasks:
 
 ```markdown
 # Daily note
@@ -13,6 +13,18 @@ This is a task:
 - [ ] Prepare vegetables
   - [ ] Marinate tofu !!!
 ```
+
+**(WIP) Roadmap**
+
+- Support tasks from frontmatter
+- Moving tasks around to different files, to/from frontmatter
+- Bases support
+- Extended metadata, including non-dataview style tags
+- And more, start a [discussion](https://github.com/tcr/tasktrack-obsidian-plugin/discussions) if you're interested
+
+## Installing
+
+At the moment, [BRAT (Beta Reviewer's Auto-update Tool)](https://tfthacker.com/brat-quick-guide) is the easiest way to install TaskTrack. Use the repo `https://github.com/tcr/tasktrack-obsidian-plugin` and set the tag to "latest".
 
 <!--
 (WIP) This is also a task:
@@ -47,7 +59,7 @@ This repo uses:
 - Preact as our JSX library
 - Tailwind for CSS
 
-Please make an issue if you've found a bug, start a discussion if you have a proposal, or create a Pull Request if you've implemented any fixes.
+Please make an issue if you've found a bug, [start a discussion](https://github.com/tcr/tasktrack-obsidian-plugin/discussions) if you have a proposal, or create a Pull Request if you've implemented any fixes.
 
 ## License
 
