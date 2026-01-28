@@ -93,7 +93,7 @@ export default class IndexingService extends Emittery<IndexingServiceEvent> {
       if (this.fileQueue.length === 0) {
         Logger.log("No Markdown files found in the vault");
         this.isParsing = false;
-        await this.completeParsingSession();
+        this.completeParsingSession();
         return;
       }
 
@@ -131,7 +131,7 @@ export default class IndexingService extends Emittery<IndexingServiceEvent> {
     await Promise.all([...this.filesInFlight.values()]);
 
     Logger.log("All Markdown files have been processed");
-    await this.completeParsingSession();
+    this.completeParsingSession();
     this.isParsing = false;
   }
 
@@ -219,7 +219,7 @@ export default class IndexingService extends Emittery<IndexingServiceEvent> {
   /**
    * Complete the current parsing session
    */
-  private async completeParsingSession(): Promise<void> {
+  private completeParsingSession(): void {
     if (this.parsingSessionId) {
       try {
         Logger.log(

@@ -228,7 +228,7 @@ export default class TaskTrackPlugin extends Plugin {
   }
 
   showCreateTaskModal() {
-    this.taskCreateModal = new TaskCreateModal(this.app, this, null);
+    this.taskCreateModal = new TaskCreateModal(this.app, this);
     this.taskCreateModal.open();
   }
 }

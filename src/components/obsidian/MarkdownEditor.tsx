@@ -44,7 +44,7 @@ export default function MarkdownEditor({
       onChange,
       cssText,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- uncontrolled component. we do not want to update each time "value" is updated, we have a separate effect to control that
   }, [app, onChange, cssText]);
 
   // Update editor whenever "value" changes.

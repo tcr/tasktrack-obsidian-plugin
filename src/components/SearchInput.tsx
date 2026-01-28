@@ -279,7 +279,7 @@ export function SearchInput({
       viewRef.current = null;
       view.destroy();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- uncontrolled component. we do not want to update each time "value" is updated, we have a separate effect to control that
   }, []);
 
   return (

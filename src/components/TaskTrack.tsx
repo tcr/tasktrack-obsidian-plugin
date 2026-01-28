@@ -15,7 +15,7 @@ import { sha256 } from "@noble/hashes/sha2.js";
 import arrayEquals from "@/lib/arrayEquals";
 import { countLines } from "@/lib/parseTasks";
 import { usePlugin } from "../context/PluginContext";
-import { Plugin, TFile } from "obsidian";
+import { Notice, Plugin, TFile } from "obsidian";
 import Logger from "@/lib/Logger";
 import packageJson from "@/../package.json";
 
@@ -114,9 +114,8 @@ export async function saveTask(
     if (
       !arrayEquals(sha256(new TextEncoder().encode(data)), baseTask.fileHash)
     ) {
-      // eslint-disable-next-line no-alert
-      alert(
-        "Warning, checksum mismatch between vault file and task. Aborting.",
+      new Notice(
+        "Warning! Checksum mismatch between vault file and task. Aborting.",
       );
       return data;
     }

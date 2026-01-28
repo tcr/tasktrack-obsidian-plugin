@@ -1,3 +1,4 @@
+/* eslint-enable no-console */
 /* eslint-disable no-console -- console replacement */
 
 const Logger = {

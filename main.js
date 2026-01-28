@@ -5033,7 +5033,7 @@ process.env.NODE_ENV !== "production" ? "__function_reset__" : 12;
 function useMacOSCheck() {
   const plugin = usePlugin();
   const enabled = plugin && plugin.settings?.dropdownEmulation;
-  return enabled && navigator.platform.toLowerCase().includes("mac");
+  return enabled && require$$0$1.Platform.isMacOS;
 }
 function FallbackStyledDropdown({
   items,
@@ -14040,8 +14040,8 @@ async function saveTask(plugin, baseTask, editedTask) {
   await plugin.app.vault.process(file, (data) => {
     returnMarkdown = data;
     if (!arrayEquals(sha256(new TextEncoder().encode(data)), baseTask.fileHash)) {
-      alert(
-        "Warning, checksum mismatch between vault file and task. Aborting."
+      new require$$0$1.Notice(
+        "Warning! Checksum mismatch between vault file and task. Aborting."
       );
       return data;
     }
@@ -15472,7 +15472,7 @@ class IndexingService extends Emittery {
       if (this.fileQueue.length === 0) {
         Logger.log("[TaskTrack][IndexingService.ts:58]", "No Markdown files found in the vault");
         this.isParsing = false;
-        await this.completeParsingSession();
+        this.completeParsingSession();
         return;
       }
       Logger.log("[TaskTrack][IndexingService.ts:63]", `Found ${this.fileQueue.length} Markdown files to parse`);
@@ -15498,7 +15498,7 @@ class IndexingService extends Emittery {
     }
     await Promise.all([...this.filesInFlight.values()]);
     Logger.log("[TaskTrack][IndexingService.ts:85]", "All Markdown files have been processed");
-    await this.completeParsingSession();
+    this.completeParsingSession();
     this.isParsing = false;
   }
   /**
@@ -15563,7 +15563,7 @@ class IndexingService extends Emittery {
   /**
    * Complete the current parsing session
    */
-  async completeParsingSession() {
+  completeParsingSession() {
     if (this.parsingSessionId) {
       try {
         Logger.log(
@@ -15932,7 +15932,7 @@ class TaskTrackPlugin extends require$$0$1.Plugin {
     modal.open();
   }
   showCreateTaskModal() {
-    this.taskCreateModal = new TaskCreateModal(this.app, this, null);
+    this.taskCreateModal = new TaskCreateModal(this.app, this);
     this.taskCreateModal.open();
   }
 }

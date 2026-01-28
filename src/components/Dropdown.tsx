@@ -1,6 +1,7 @@
 import { usePlugin } from "@/context/PluginContext";
 import { useSelect } from "downshift";
 import { h, TargetedEvent, ComponentChild } from "preact";
+import { Platform } from "obsidian";
 
 export interface DropdownItem<T> {
   value: T;
@@ -13,8 +14,7 @@ function useMacOSCheck() {
 
   const enabled = plugin && plugin.settings?.dropdownEmulation;
 
-  // eslint-disable-next-line obsidianmd/platform, @typescript-eslint/no-deprecated -- necessary way to determine OS for Mac-specific styling
-  return enabled && navigator.platform.toLowerCase().includes("mac");
+  return enabled && Platform.isMacOS;
 }
 
 // Fallback component for non-macOS platforms

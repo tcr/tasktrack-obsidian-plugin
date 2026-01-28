@@ -25,7 +25,7 @@ import { TaskDetails, TaskPriority, TaskStatus } from "../Task";
 
 // TODO replace this with tanstack's column size feature
 declare module "@tanstack/react-table" {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- need to specify type parameters in this definition https://tanstack.com/table/latest/docs/api/core/column-def#meta
   interface ColumnMeta<TData extends RowData, TValue> {
     columnWidth: number | null;
   }
@@ -415,7 +415,7 @@ export default function TaskTable({
   const [sorting, setSorting] = useState<SortingState>([]);
   const { columnWidths, handleResize } = useColumnResizing(columns);
 
-  // eslint-disable-next-line react-hooks/incompatible-library
+  // eslint-disable-next-line react-hooks/incompatible-library -- needs update from Tanstack https://github.com/TanStack/table/issues/5567
   const table = useReactTable({
     data: (taskContext?.tasks || []).map((task) => ({
       ...task,

@@ -1,11 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument -- pre-existing code */
-/* eslint-disable @typescript-eslint/no-unsafe-return -- pre-existing code */
-/* eslint-disable @typescript-eslint/no-unsafe-call -- pre-existing code */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access -- pre-existing code */
-/* eslint-disable @typescript-eslint/no-this-alias -- pre-existing code */
-/* eslint-disable @typescript-eslint/no-explicit-any -- pre-existing code */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment -- pre-existing code */
-
 /**
  * Markdown Editor component, hoisted from Task Genius' excellent wrapper:
  * https://github.com/taskgenius/taskgenius-plugin/blob/master/src/editor-extensions/core/markdown-editor.ts
