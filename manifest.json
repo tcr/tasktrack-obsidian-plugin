@@ -1,15 +1,10 @@
 {
 	"id": "tasktrack",
-	"name": "TaskTrack (alpha)",
-	"version": "0.1.0",
+	"name": "TaskTrack",
+	"version": "0.1.1",
 	"minAppVersion": "1.10.0",
-	"description": "Get your life on the fast track. An obsidian task management tool that supports both dedicated modal and (soon) Bases usage. Merges inline task lists with (soon) Bases-compatible task documents so your tasks grow with you.",
+	"description": "Get your life on the fast track. A task management tool supporting a dedicated modal + Bases usage. Tackle inline task lists along with Bases-compatible documents so your tasks grow with you.",
 	"author": "Tim Ryan",
 	"authorUrl": "https://github.com/tcr/tasktrack",
-	"isDesktopOnly": true,
-	"features": [
-		"Task creation and management",
-		"Task dependencies and subtasks",
-		"Task scraping from Obsidian notes"
-	]
+	"isDesktopOnly": true
 }
