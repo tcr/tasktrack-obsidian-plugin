@@ -16,6 +16,7 @@ Example of inline tasks:
 
 **(WIP) Roadmap**
 
+- Mobile support
 - Support tasks from frontmatter
 - Moving tasks around to different files, to/from frontmatter
 - Bases support
