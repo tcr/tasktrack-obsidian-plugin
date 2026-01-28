@@ -244,7 +244,7 @@ export class TaskDatabase extends Emittery<TaskDatabaseEventData> {
   /**
    * Close the database connection
    */
-  public async close(): Promise<void> {
+  public close(): void {
     if (this.db.isOpen()) {
       this.db.close();
     }
