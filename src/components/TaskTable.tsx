@@ -81,6 +81,15 @@ function StatusDropdown({
   );
 }
 
+const PRIORITY_ORDER: Record<TaskPriority, number> = {
+  wish: 0,
+  low: 1,
+  none: 2,
+  medium: 3,
+  high: 4,
+  critical: 5,
+} as const;
+
 function PriorityDropdown({
   priority,
   onChange,
@@ -88,21 +97,26 @@ function PriorityDropdown({
   priority: TaskPriority;
   onChange: (_: TaskPriority) => void;
 }) {
+  const items: Record<TaskPriority, DropdownItem<TaskPriority>> = {
+    wish: {
+      value: "wish",
+      label: <PriorityBadge priority="wish" />,
+    },
+    low: { value: "low", label: <PriorityBadge priority="low" /> },
+    none: {
+      value: "none",
+      label: <PriorityBadge priority="none" />,
+    },
+    medium: { value: "medium", label: <PriorityBadge priority="medium" /> },
+    high: { value: "high", label: <PriorityBadge priority="high" /> },
+    critical: {
+      value: "critical",
+      label: <PriorityBadge priority="critical" />,
+    },
+  };
   return (
     <Dropdown
-      items={[
-        {
-          value: "none",
-          label: <PriorityBadge priority="none" />,
-        },
-        { value: "low", label: <PriorityBadge priority="low" /> },
-        { value: "medium", label: <PriorityBadge priority="medium" /> },
-        { value: "high", label: <PriorityBadge priority="high" /> },
-        {
-          value: "critical",
-          label: <PriorityBadge priority="critical" />,
-        },
-      ]}
+      items={Object.values(items) as DropdownItem<TaskPriority>[]}
       selectedItem={priority}
       onChange={onChange}
       optionHeight={28}
@@ -110,14 +124,6 @@ function PriorityDropdown({
     />
   );
 }
-
-const PRIORITY_ORDER = {
-  none: 0,
-  low: 1,
-  medium: 2,
-  high: 3,
-  critical: 4,
-} as const;
 
 // tanstack/react-table column definitions
 const columns: ColumnDef<TaskRowContext>[] = [

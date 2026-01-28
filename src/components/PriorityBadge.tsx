@@ -5,8 +5,9 @@ import { h } from "preact";
 export function PriorityBadge({ priority }: { priority: TaskPriority }) {
   const priorityColors: Record<TaskPriority, { color: string; label: string }> =
     {
-      none: { color: "gray", label: "None" },
+      wish: { color: "var(--color-cyan)", label: "Wish" },
       low: { color: "var(--color-blue)", label: "Low" },
+      none: { color: "gray", label: "None" },
       medium: { color: "var(--color-green)", label: "Medium" },
       high: { color: "var(--color-yellow)", label: "High" },
       critical: { color: "var(--color-red)", label: "Critical" },

@@ -1,7 +1,13 @@
-export type TaskPriority = "none" | "low" | "medium" | "high" | "critical";
+export type TaskPriority =
+  | "wish"
+  | "low"
+  | "none"
+  | "medium"
+  | "high"
+  | "critical";
 
 export function parseTaskPriority(input: string): TaskPriority | null {
-  return /^(none|low|medium|high|critical)$/.test(input)
+  return /^(wish|low|none|medium|high|critical)$/.test(input)
     ? (input as TaskPriority)
     : null;
 }
