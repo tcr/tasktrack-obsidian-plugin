@@ -46,7 +46,7 @@ export default class TaskTrackSettingsTab extends PluginSettingTab {
       .addToggle((toggle) =>
         toggle
           .setValue(this.plugin.settings.dropdownEmulation)
-          .onChange(async (value) => {
+          .onChange((value) => {
             this.plugin.settings.dropdownEmulation = value;
           }),
       );

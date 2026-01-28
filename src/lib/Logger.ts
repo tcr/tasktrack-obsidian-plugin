@@ -1,4 +1,4 @@
-/* eslint-disable no-undef, no-console */
+/* eslint-disable no-console -- console replacement */
 
 const Logger = {
   log(...args: unknown[]): void {

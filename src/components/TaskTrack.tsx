@@ -114,7 +114,7 @@ export async function saveTask(
     if (
       !arrayEquals(sha256(new TextEncoder().encode(data)), baseTask.fileHash)
     ) {
-      // eslint-disable-next-line no-alert, no-undef
+      // eslint-disable-next-line no-alert
       alert(
         "Warning, checksum mismatch between vault file and task. Aborting.",
       );

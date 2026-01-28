@@ -13,7 +13,7 @@ function useMacOSCheck() {
 
   const enabled = plugin && plugin.settings?.dropdownEmulation;
 
-  // eslint-disable-next-line obsidianmd/platform, no-undef, @typescript-eslint/no-deprecated
+  // eslint-disable-next-line obsidianmd/platform, @typescript-eslint/no-deprecated -- necessary way to determine OS for Mac-specific styling
   return enabled && navigator.platform.toLowerCase().includes("mac");
 }
 

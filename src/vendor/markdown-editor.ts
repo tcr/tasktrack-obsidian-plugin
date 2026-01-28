@@ -1,18 +1,17 @@
-/* eslint-disable obsidianmd/no-tfile-tfolder-cast */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-this-alias */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument -- pre-existing code */
+/* eslint-disable @typescript-eslint/no-unsafe-return -- pre-existing code */
+/* eslint-disable @typescript-eslint/no-unsafe-call -- pre-existing code */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access -- pre-existing code */
+/* eslint-disable @typescript-eslint/no-this-alias -- pre-existing code */
+/* eslint-disable @typescript-eslint/no-explicit-any -- pre-existing code */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment -- pre-existing code */
 
 /**
  * Markdown Editor component, hoisted from Task Genius' excellent wrapper:
  * https://github.com/taskgenius/taskgenius-plugin/blob/master/src/editor-extensions/core/markdown-editor.ts
  */
 
-import { App, Scope, TFile, WorkspaceLeaf } from "obsidian";
+import { App, Scope, WorkspaceLeaf } from "obsidian";
 import { MarkdownScrollableEditView, WidgetEditorView } from "obsidian-typings";
 
 import { EditorSelection, Prec } from "@codemirror/state";
@@ -49,7 +48,7 @@ function resolveEditorPrototype(app: App): any {
       app,
       containerEl: app.dom.appContainerEl.ownerDocument.createElement("div"),
     },
-    null as unknown as TFile,
+    null as any,
     "",
   ) as WidgetEditorView;
 
