@@ -12,6 +12,9 @@ import Logger from "./Logger";
 // Any three-character sequence like [?]
 const MARKER_REGEX: RegExp = /^\[([^\]])\]\s+/;
 
+// Obsidian Task Plugin-like priorities
+const OBSIDIAN_TASK_PRIORITIES = /(🔺|⏫|🔼|🔽|⏬️)/g;
+
 export function stripLeadingSpaces(spaces: number, line: string): string {
   let result = line;
   let remainingSpaces = spaces;
@@ -62,7 +65,7 @@ function parseContent(
   // Get current timestamp for creation/update times
   const now = new Date().toISOString();
 
-  // Extract tags from the todo text (simple pattern matching)
+  // Extract tags from the todo text.
   const tags: string[] = [];
   const tagMatches = unparsedTitle.match(/#([a-zA-Z0-9_-]+)/g);
   if (tagMatches) {
@@ -79,10 +82,33 @@ function parseContent(
     dataviewTags[key] = value;
   }
 
-  const title = unparsedTitle.replace(dataviewPattern, "").trim();
+  let title = unparsedTitle.replace(dataviewPattern, "").trim();
 
   // Parse priority if present
   let priority = parseTaskPriority(dataviewTags.priority) ?? "none";
+
+  // Parse "Task Plugin"-style priorities
+  let taskPluginPriority = title.match(OBSIDIAN_TASK_PRIORITIES);
+  if (taskPluginPriority && taskPluginPriority[0]) {
+    switch (taskPluginPriority[0]) {
+      case "🔺":
+        priority = "critical";
+        break;
+      case "⏫":
+        priority = "high";
+        break;
+      case "🔼":
+        priority = "medium";
+        break;
+      case "🔽":
+        priority = "low";
+        break;
+      case "⏬️":
+        priority = "wish";
+        break;
+    }
+  }
+  title = title.replace(OBSIDIAN_TASK_PRIORITIES, "").trim();
 
   return {
     title,
@@ -134,8 +160,8 @@ export function parseTasks(path: string, markdownContent: string): Task[] {
 
       // Check if this can be parsed like a task.
       const startColumn: number = firstChild.position!.start.column;
-      const startOffset: number = firstChild.position!.start.offset!;
-      const endOffset: number = firstChild.position!.end.offset!;
+      const startOffset: number = firstChild.position!.start.offset;
+      const endOffset: number = firstChild.position!.end.offset;
       const titleContent = markdownContent.substring(startOffset, endOffset);
       if (!MARKER_REGEX.test(titleContent)) {
         return;
@@ -160,9 +186,9 @@ export function parseTasks(path: string, markdownContent: string): Task[] {
       let description: string | null = null;
       if (listItem.children.length > 1) {
         const childrenStartOffset: number =
-          listItem.children[1].position!.start.offset!;
+          listItem.children[1].position!.start.offset;
         const childrenEndOffset: number =
-          listItem.children.slice(-1)[0].position!.end.offset!;
+          listItem.children.slice(-1)[0].position!.end.offset;
 
         const childrenContent = markdownContent.substring(
           childrenStartOffset,

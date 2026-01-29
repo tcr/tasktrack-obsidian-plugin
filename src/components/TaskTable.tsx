@@ -72,7 +72,7 @@ function StatusDropdown({
 
   return (
     <Dropdown
-      items={Object.values(items) as DropdownItem<TaskStatus>[]}
+      items={Object.values(items)}
       selectedItem={status}
       onChange={onChange}
       optionHeight={28}

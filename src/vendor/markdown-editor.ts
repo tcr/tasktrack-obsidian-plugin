@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-this-alias -- imported code */
+/* eslint-disable @typescript-eslint/no-explicit-any -- imported code */
+
 /**
  * Markdown Editor component, hoisted from Task Genius' excellent wrapper:
  * https://github.com/taskgenius/taskgenius-plugin/blob/master/src/editor-extensions/core/markdown-editor.ts
@@ -50,7 +53,7 @@ function resolveEditorPrototype(app: App): any {
   const editModePrototype = Object.getPrototypeOf(
     widgetEditorView.editMode!,
   ) as object;
-  const MarkdownEditor = Object.getPrototypeOf(editModePrototype) as any;
+  const MarkdownEditor = Object.getPrototypeOf(editModePrototype);
 
   // Unload to remove the temporary editor
   widgetEditorView.unload();
