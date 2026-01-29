@@ -1,6 +1,6 @@
 {
   "name": "tasktrack",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A modal for managing tasks across your Obsidian vault.",
   "main": "src/main.ts",
   "type": "module",

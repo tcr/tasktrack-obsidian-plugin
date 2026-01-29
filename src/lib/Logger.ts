@@ -1,10 +1,10 @@
 const Logger = {
-  log(...args: unknown[]): void {
-    console.log(...args);
+  log(..._args: unknown[]): void {
+    // console.log(...args);
   },
 
-  info(...args: unknown[]): void {
-    console.info(...args);
+  info(..._args: unknown[]): void {
+    // console.info(...args);
   },
 
   warn(...args: unknown[]): void {
@@ -19,12 +19,12 @@ const Logger = {
     console.debug(...args);
   },
 
-  trace(...args: unknown[]): void {
-    console.trace(...args);
+  trace(..._args: unknown[]): void {
+    // console.trace(...args);
   },
 
-  assert(condition: boolean, ...args: unknown[]): void {
-    console.assert(condition, ...args);
+  assert(_condition: boolean, ..._args: unknown[]): void {
+    // console.assert(condition, ...args);
   },
 };
 

@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-this-alias -- imported code */
-/* eslint-disable @typescript-eslint/no-explicit-any -- imported code */
-
 /**
  * Markdown Editor component, hoisted from Task Genius' excellent wrapper:
  * https://github.com/taskgenius/taskgenius-plugin/blob/master/src/editor-extensions/core/markdown-editor.ts

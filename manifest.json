@@ -1,7 +1,7 @@
 {
   "id": "tasktrack",
   "name": "TaskTrack",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "minAppVersion": "1.10.0",
   "description": "Get your life on the fast track. A task management tool supporting a dedicated modal + Bases usage. Tackle inline task lists along with Bases-compatible documents so your tasks grow with you.",
   "author": "Tim Ryan",

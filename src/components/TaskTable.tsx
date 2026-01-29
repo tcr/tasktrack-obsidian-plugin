@@ -116,7 +116,7 @@ function PriorityDropdown({
   };
   return (
     <Dropdown
-      items={Object.values(items) as DropdownItem<TaskPriority>[]}
+      items={Object.values(items)}
       selectedItem={priority}
       onChange={onChange}
       optionHeight={28}
