@@ -958,67 +958,68 @@ class EmbeddableMarkdownEditor {
     this.initial_value = this.options.value;
     this.scope = new require$$0$1.Scope(app.scope);
     this.scope.register(["Mod"], "Enter", () => true);
-    const self2 = this;
     const uninstaller = around(EditorClass.prototype, {
-      buildLocalExtensions: (originalMethod) => function() {
-        const extensions = originalMethod.call(this);
-        if (this === self2.editor) {
-          if (self2.options.placeholder) {
-            extensions.push(view.placeholder(self2.options.placeholder));
-          }
-          extensions.push(
-            view.EditorView.domEventHandlers({
-              paste: (event) => {
-                self2.options.onPaste(event, self2);
-              },
-              blur: () => {
-                app.keymap.popScope(self2.scope);
-                if (self2.options.onBlur) {
-                  self2.options.onBlur(self2);
-                }
-              },
-              focusin: () => {
-                app.keymap.pushScope(self2.scope);
-                app.workspace.activeEditor = self2.owner;
-              }
-            })
-          );
-          const keyBindings = [
-            {
-              key: "Enter",
-              run: () => {
-                return self2.options.onEnter(self2, false, false);
-              },
-              shift: () => self2.options.onEnter(self2, false, true)
-            },
-            {
-              key: "Mod-Enter",
-              run: () => self2.options.onEnter(self2, true, false),
-              shift: () => self2.options.onEnter(self2, true, true)
-            },
-            {
-              key: "Escape",
-              run: () => {
-                self2.options.onEscape(self2);
-                return true;
-              },
-              preventDefault: true
+      buildLocalExtensions: (originalMethod) => {
+        return (root) => {
+          const extensions = originalMethod.call(root);
+          if (root === this.editor) {
+            if (this.options.placeholder) {
+              extensions.push(view.placeholder(this.options.placeholder));
             }
-          ];
-          if (self2.options.singleLine) {
-            keyBindings[0] = {
-              key: "Enter",
-              run: () => {
-                return self2.options.onEnter(self2, false, false);
+            extensions.push(
+              view.EditorView.domEventHandlers({
+                paste: (event) => {
+                  this.options.onPaste(event, this);
+                },
+                blur: () => {
+                  app.keymap.popScope(this.scope);
+                  if (this.options.onBlur) {
+                    this.options.onBlur(this);
+                  }
+                },
+                focusin: () => {
+                  app.keymap.pushScope(this.scope);
+                  app.workspace.activeEditor = this.owner;
+                }
+              })
+            );
+            const keyBindings = [
+              {
+                key: "Enter",
+                run: () => {
+                  return this.options.onEnter(this, false, false);
+                },
+                shift: () => this.options.onEnter(this, false, true)
               },
-              shift: () => {
-                return self2.options.onEnter(self2, false, true);
+              {
+                key: "Mod-Enter",
+                run: () => this.options.onEnter(this, true, false),
+                shift: () => this.options.onEnter(this, true, true)
+              },
+              {
+                key: "Escape",
+                run: () => {
+                  this.options.onEscape(this);
+                  return true;
+                },
+                preventDefault: true
               }
-            };
+            ];
+            if (this.options.singleLine) {
+              keyBindings[0] = {
+                key: "Enter",
+                run: () => {
+                  return this.options.onEnter(this, false, false);
+                },
+                shift: () => {
+                  return this.options.onEnter(this, false, true);
+                }
+              };
+            }
+            extensions.push(state.Prec.highest(view.keymap.of(keyBindings)));
           }
-          extensions.push(state.Prec.highest(view.keymap.of(keyBindings)));
-        }
-        return extensions;
+          return extensions;
+        };
       }
     });
     this.editor = new EditorClass(app, container, {
@@ -1036,10 +1037,12 @@ class EmbeddableMarkdownEditor {
     this.set(options.value || "", false);
     this.register(
       around(app.workspace, {
-        setActiveLeaf: (oldMethod) => (leaf, ...args) => {
-          if (!this.activeCM?.hasFocus) {
-            oldMethod.call(app.workspace, leaf, ...args);
-          }
+        setActiveLeaf: (oldMethod) => {
+          return (leaf, ...args) => {
+            if (!this.activeCM?.hasFocus) {
+              oldMethod.call(app.workspace, leaf, ...args);
+            }
+          };
         }
       })
     );
@@ -13965,7 +13968,7 @@ function arrayEquals(a2, b2) {
     (val, index) => val === b2[index]
   );
 }
-const version = "0.1.4";
+const version = "0.1.5";
 const packageJson = {
   version
 };

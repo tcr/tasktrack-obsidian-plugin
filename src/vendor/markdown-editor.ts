@@ -3,13 +3,14 @@
  * https://github.com/taskgenius/taskgenius-plugin/blob/master/src/editor-extensions/core/markdown-editor.ts
  */
 
-import { App, Scope, WorkspaceLeaf } from "obsidian";
+import { App, MarkdownFileInfo, Scope, WorkspaceLeaf } from "obsidian";
 import { MarkdownScrollableEditView, WidgetEditorView } from "obsidian-typings";
 
 import { EditorSelection, Prec } from "@codemirror/state";
 import { EditorView, keymap, placeholder, ViewUpdate } from "@codemirror/view";
 
 import { around } from "monkey-around";
+import { Extension } from "@codemirror/state";
 
 /**
  * Creates an embeddable markdown editor
@@ -110,14 +111,13 @@ export class EmbeddableMarkdownEditor {
   get containerEl(): HTMLElement {
     return this.editor.containerEl;
   }
-  get activeCM(): any {
-    // TODO EditorView {
+  get activeCM(): EditorView {
     return this.editor.activeCM;
   }
   get app(): App {
     return this.editor.app;
   }
-  get owner(): any {
+  get owner(): MarkdownFileInfo {
     return this.editor.owner;
   }
   get _loaded(): boolean {
@@ -145,38 +145,35 @@ export class EmbeddableMarkdownEditor {
     // Prevent Mod+Enter default behavior
     this.scope.register(["Mod"], "Enter", () => true);
 
-    // Store reference to self for the patched method BEFORE using it
-    const self = this;
-
     // Use monkey-around to safely patch the method
     const uninstaller = around(EditorClass.prototype, {
-      buildLocalExtensions: (originalMethod: any) =>
-        function (this: any) {
-          const extensions = originalMethod.call(this);
+      buildLocalExtensions: (originalMethod: () => Extension[]) => {
+        return (root: any) => {
+          const extensions: Extension[] = originalMethod.call(root);
 
           // Only add our custom extensions if this is our editor instance
-          if (this === self.editor) {
+          if (root === this.editor) {
             // Add placeholder if configured
-            if (self.options.placeholder) {
-              extensions.push(placeholder(self.options.placeholder));
+            if (this.options.placeholder) {
+              extensions.push(placeholder(this.options.placeholder));
             }
 
             // Add paste, blur, and focus event handlers
             extensions.push(
               EditorView.domEventHandlers({
                 paste: (event) => {
-                  self.options.onPaste(event, self);
+                  this.options.onPaste(event, this);
                 },
                 blur: () => {
                   // Always trigger blur callback and let it handle the logic
-                  app.keymap.popScope(self.scope);
-                  if (self.options.onBlur) {
-                    self.options.onBlur(self);
+                  app.keymap.popScope(this.scope);
+                  if (this.options.onBlur) {
+                    this.options.onBlur(this);
                   }
                 },
                 focusin: () => {
-                  app.keymap.pushScope(self.scope);
-                  app.workspace.activeEditor = self.owner;
+                  app.keymap.pushScope(this.scope);
+                  app.workspace.activeEditor = this.owner;
                 },
               }),
             );
@@ -186,19 +183,19 @@ export class EmbeddableMarkdownEditor {
               {
                 key: "Enter",
                 run: () => {
-                  return self.options.onEnter(self, false, false);
+                  return this.options.onEnter(this, false, false);
                 },
-                shift: () => self.options.onEnter(self, false, true),
+                shift: () => this.options.onEnter(this, false, true),
               },
               {
                 key: "Mod-Enter",
-                run: () => self.options.onEnter(self, true, false),
-                shift: () => self.options.onEnter(self, true, true),
+                run: () => this.options.onEnter(this, true, false),
+                shift: () => this.options.onEnter(this, true, true),
               },
               {
                 key: "Escape",
                 run: () => {
-                  self.options.onEscape(self);
+                  this.options.onEscape(this);
                   return true;
                 },
                 preventDefault: true,
@@ -206,16 +203,16 @@ export class EmbeddableMarkdownEditor {
             ];
 
             // For single line mode, prevent Enter key from creating new lines
-            if (self.options.singleLine) {
+            if (this.options.singleLine) {
               keyBindings[0] = {
                 key: "Enter",
                 run: () => {
                   // In single line mode, Enter should trigger onEnter
-                  return self.options.onEnter(self, false, false);
+                  return this.options.onEnter(this, false, false);
                 },
                 shift: () => {
                   // Even with shift, still call onEnter in single line mode
-                  return self.options.onEnter(self, false, true);
+                  return this.options.onEnter(this, false, true);
                 },
               };
             }
@@ -224,7 +221,8 @@ export class EmbeddableMarkdownEditor {
           }
 
           return extensions;
-        },
+        };
+      },
     });
 
     // Create the editor with the app instance
@@ -250,13 +248,13 @@ export class EmbeddableMarkdownEditor {
     // Prevent active leaf changes while focused
     this.register(
       around(app.workspace, {
-        setActiveLeaf:
-          (oldMethod: any) =>
-          (leaf: WorkspaceLeaf, ...args: any[]) => {
+        setActiveLeaf: (oldMethod: any) => {
+          return (leaf: WorkspaceLeaf, ...args: unknown[]) => {
             if (!this.activeCM?.hasFocus) {
               oldMethod.call(app.workspace, leaf, ...args);
             }
-          },
+          };
+        },
       }),
     );
 
@@ -279,7 +277,7 @@ export class EmbeddableMarkdownEditor {
 
     // Override onUpdate to call our onChange handler
     const originalOnUpdate = this.editor.onUpdate.bind(this.editor);
-    this.editor.onUpdate = ((update: any, changed: boolean) => {
+    this.editor.onUpdate = ((update: ViewUpdate, changed: boolean) => {
       // @ts-ignore - We know this is safe because we're calling the original method
       originalOnUpdate(update, changed);
       if (changed) this.options.onChange(update, this);
@@ -297,7 +295,7 @@ export class EmbeddableMarkdownEditor {
   }
 
   // Register cleanup callback
-  register(cb: any): void {
+  register(cb: () => any): void {
     this.editor.register(cb);
   }
 

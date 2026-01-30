@@ -311,10 +311,10 @@
   }
 
   [popover] {
-    inset: var(--toolwind-toggle-u75VPEYXtp, 0px);
-    background-color: var(--toolwind-toggle-GlUUrfRIB8, canvas);
-    color: var(--toolwind-toggle-S2O2I7yukA, canvastext);
-    margin: var(--toolwind-toggle-FovecdLJEU, auto);
+    inset: var(--toolwind-toggle-CXtRMOmiVq, 0px);
+    background-color: var(--toolwind-toggle-9lP4r9ifLw, canvas);
+    color: var(--toolwind-toggle-x3xUW7YlTh, canvastext);
+    margin: var(--toolwind-toggle-DqYSuQ9oHY, auto);
   }
 }
 
